@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 'name' => 'User One',
+                'login' => 'usr1',
                 'email' => 'user1@example.com',
                 'password' => Hash::make('password1'),
                 'email_verified_at' => now(),
@@ -25,6 +26,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'User Two',
+                'login' => 'usr2',
                 'email' => 'user2@example.com',
                 'password' => Hash::make('password2'),
                 'email_verified_at' => now(),
@@ -33,6 +35,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'name' => 'User Three',
+                'login' => 'usr3',
                 'email' => 'user3@example.com',
                 'password' => Hash::make('password3'),
                 'email_verified_at' => now(),

@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 
-<h2>Users</h2>
+<h2>Users2</h2>
 <ul>
     @foreach ($users as $user )
         <li>{{ $user->name }}</li>
