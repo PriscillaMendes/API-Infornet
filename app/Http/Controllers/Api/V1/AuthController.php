@@ -19,7 +19,13 @@ class AuthController extends Controller
     public function login(Request $request){
         try{
 
-            $credentials = $request->only('name', 'password');
+            $input = $request->only('login', 'senha');
+            
+            $credentials = [
+                'login' => $input['login'],
+                'password' => $input['senha'],
+            ];
+
             $auth = $this->loginService->execute($credentials);
             return $auth;
             
