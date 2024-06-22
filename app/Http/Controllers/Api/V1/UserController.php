@@ -1,24 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class UserController extends Controller
 {
-    public readonly User $user;
-    public function __construct()
-    {
-        $this->user = new User();
-    }
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $users = $this->user->all();
-        return view('users', data: ['users'=> $users]);
+        return User::select('name', 'email')->get();
     }
 
     /**
@@ -42,7 +35,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return User::select('name', 'email')->where('id', $id)->first();
     }
 
     /**
