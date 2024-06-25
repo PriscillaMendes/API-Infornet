@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Faker\Factory as Faker;
 
 
 class PrestadorSeeder extends Seeder
@@ -14,20 +15,37 @@ class PrestadorSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 25; $i++) {
+        $faker = Faker::create('pt_BR');
+        
+        $cidades = [
+            'Belo Horizonte',
+            'Contagem',
+            'Betim',
+            'Uberlândia',
+            'Juiz de Fora',
+            'Montes Claros',
+            'Ribeirão das Neves',
+            'Uberaba',
+            'Governador Valadares',
+            'Ipatinga',
+        ];
+
+        for ($i = 0; $i < 25; $i++) {
+            $cidade = $faker->randomElement($cidades);
             DB::table('prestador')->insert([
-                'nome' => 'Prestador ' . $i,
-                'logradouro' => 'Logradouro ' . $i,
-                'bairro' => 'Bairro ' . $i,
-                'numero' => (string)rand(1, 100),
-                'latitude' => mt_rand(-9000000, 9000000) / 1000000,
-                'longitude' => mt_rand(-18000000, 18000000) / 1000000,
-                'cidade' => 'Cidade ' . $i,
-                'UF' => Str::random(2),
-                'situacao' => 'ativo',
+                'nome' => $faker->company,
+                'logradouro' => $faker->streetName,
+                'bairro' => $faker->streetSuffix,
+                'numero' => $faker->buildingNumber,
+                'latitude' => $faker->latitude(-20, -18),
+                'longitude' => $faker->longitude(-44, -42),
+                'cidade' => $cidade,
+                'UF' => 'MG',
+                'situacao' => 'disponível',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
+
     }
 }
