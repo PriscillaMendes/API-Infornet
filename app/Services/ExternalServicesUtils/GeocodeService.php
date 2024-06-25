@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services\GeoUtils;
+namespace App\Services\ExternalServicesUtils;
 
 use Illuminate\Support\Facades\Http;
+
 
 class GeocodeService
 {
@@ -13,8 +14,8 @@ class GeocodeService
     public function __construct()
     {
         $this->baseUrl = config('services.geocode.url');
-        $this->username = config('services.geocode.username');
-        $this->password = config('services.geocode.password');
+        $this->username = config('services.external_services_auth.username');
+        $this->password = config('services.external_services_auth.password');
     }
 
     public function getCoordinates($address)
@@ -23,7 +24,11 @@ class GeocodeService
             ->get($this->baseUrl . urlencode($address));
 
         if ($response->successful()) {
-            return $response->json();
+            $data = $response->json();
+            return [
+                'latitude' => $data['lat'],
+                'longitude' => $data['lon'],
+            ];
         }
 
         return null;
