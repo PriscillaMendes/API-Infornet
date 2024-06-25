@@ -33,8 +33,13 @@ return [
     
     'geocode' => [
         'url' => env('GEOCODE_API_URL'),
-        'username' => env('GEOCODE_API_USERNAME'),
-        'password' => env('GEOCODE_API_PASSWORD'),
+    ],
+    'prestadores' => [
+        'url' => env('PRESTADORES_API_URL'),
+    ],
+    'external_services_auth' => [
+        'username' => env('SERVICES_API_USERNAME'),
+        'password' => env('SERVICES_API_PASSWORD'),
     ],
 
 ];
