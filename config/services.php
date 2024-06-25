@@ -30,5 +30,16 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    
+    'geocode' => [
+        'url' => env('GEOCODE_API_URL'),
+    ],
+    'prestadores' => [
+        'url' => env('PRESTADORES_API_URL'),
+    ],
+    'external_services_auth' => [
+        'username' => env('SERVICES_API_USERNAME'),
+        'password' => env('SERVICES_API_PASSWORD'),
+    ],
 
 ];
