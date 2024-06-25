@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('longitude', 10, 7)->nullable();
             $table->string('cidade');
             $table->string('UF', 2);  // Assuming UF is the state abbreviation
-            $table->string('situacao')->default('ativo');
+            $table->string('situacao')->default('disponivel');
             $table->timestamps();
         });
     }

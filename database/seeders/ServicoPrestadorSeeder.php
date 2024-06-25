@@ -15,18 +15,12 @@ class ServicoPrestadorSeeder extends Seeder
     {
         $prestadorIds = DB::table('prestador')->pluck('id');
         $servicoIds = DB::table('servicos')->pluck('id')->toArray();
-        shuffle($servicoIds);  // Shuffle the services to randomize the assignment
-
-        // Check if we have enough services to assign 3 unique ones to each prestador
-        if (count($servicoIds) < count($prestadorIds) * 3) {
-            throw new \Exception('Not enough services to assign 3 unique services to each prestador');
-        }
-
+        shuffle($servicoIds); 
+       
         $index = 0;
 
         foreach ($prestadorIds as $prestadorId) {
-            $assignedServices = array_slice($servicoIds, $index, 3);
-            $index += 3;
+            $assignedServices = array_rand(array_flip($servicoIds), 3);
 
             foreach ($assignedServices as $servicoId) {
                 DB::table('servico_prestador')->insert([

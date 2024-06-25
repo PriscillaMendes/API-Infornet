@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('valor_km_excedente', 8, 2);
             $table->timestamps();
 
-            $table->unique('servico_id');
+            $table->unique(['prestador_id','servico_id']);
         });
     }
 
