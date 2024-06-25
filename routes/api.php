@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\GeocodeController;
 use App\Http\Middleware\Api\V1\ProtectedRouteAuth;
 use App\Http\Controllers\Api\V1\ServicesController;
+use App\Http\Controllers\Api\V1\ProvidersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +28,17 @@ Route::prefix("v1")->group(function () {
     Route::get("/", [UserController::class, 'index'])->name('users.index');
     
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/me', [AuthController::class, 'me'])->middleware(ProtectedRouteAuth::class);
+    Route::get('/me', [AuthController::class, 'me'])->middleware(ProtectedRouteAuth::class);
 
     Route::get('/servicos', [ServicesController::class, 'index'])->middleware(ProtectedRouteAuth::class);
+
+    Route::get('/prestadores', [ProvidersController::class, 'index'])->middleware(ProtectedRouteAuth::class);
+    Route::get('/prestadores/{prestador}', [ProvidersController::class, 'show'])->middleware(ProtectedRouteAuth::class);
+    Route::get('/prestadores/{prestador_endereco}', [ProvidersController::class, 'show'])->middleware(ProtectedRouteAuth::class);
+    Route::get('/prestadores/status/{res}', [ProvidersController::class, 'getProvidersStatus'])->middleware(ProtectedRouteAuth::class);
+
+    Route::get('/geocode/{endereco}', [GeocodeController::class, 'getCoordinates'])->middleware(ProtectedRouteAuth::class);
+
 
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
