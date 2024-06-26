@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "d7b991f6-90ac-411b-8347-c7e3017abae1",
+		"name": "Api INet Doc",
+		"description": "### Documentação para utilização da API\n\nTodas as rotas são privadas, para acessá-las é necessário realizar o login e adicionar o token do tipo Baerer.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36492158"
+	},
+	"item": [
+		{
+			"name": "Public Routes",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"usr1\",\r\n    \"senha\": \"password1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Autentica um usuário e retorna um token de acesso.\n\n\\## Parâmetros  \n\\- \"login\" (string, obrigatório): Login do usuário.  \n\\- \"senha\" (string, obrigatório): Senha do usuário."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Private Routes",
+			"item": [
+				{
+					"name": "Rotas Serviços",
+					"item": [
+						{
+							"name": "Buscar Serviços Disponíveis",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/servicos",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"servicos"
+									]
+								},
+								"description": "Lista todos os Serviços Disponíveis"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Rotas Prestador",
+					"item": [
+						{
+							"name": "Buscar Prestadores",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"origem\": \r\n        {\r\n            \"cidade\" : \"Uberaba\",\r\n            \"uf\" : \"MG\",\r\n            \"latitude\" : \"-19.926868\",\r\n            \"longitude\" : \"-44.0696073\"\r\n        },\r\n    \r\n    \"destino\":\r\n        {\r\n            \"cidade\" : \"Contagem\",\r\n            \"uf\" : \"MG\",\r\n            \"latitude\" : \"-19.926868\",\r\n            \"longitude\" : \"-44.4596073\"\r\n        },\r\n    \r\n    \"servico_id\" : \"1\",\r\n    \"quantidade\" : \"10\",\r\n    \"ordenacao\" : [\"total\", \"distance\"],\r\n    \"filtros\" : []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/prestadores/buscar",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"prestadores",
+										"buscar"
+									]
+								},
+								"description": "Recebe dados de origem e destino para um serviço e retorna a lista de prestadores de acordo com os filtros e dados passados.\n\nOs campos origem e destino possuem os subcampos obrigatórios: cidade, uf, latitude e longetude.\n\nO campo ordenacao pode receber até 3 dados passados como array e pode ser nulo, como no exemplo abaixo:\n\n``` json\n    \"ordenacao\" : [\"total\", \"distance\", \"providers_status\"],\n\n ```\n\nO campo filtros pode receber os valores cidade, estado, online ou offline e também recebe até 3 parâmetros:\n\n``` json\n    \"filtros\" : [\"cidade\", \"estado\", \"online\" ou \"offline\"]\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar Todos os Prestadores",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/prestadores",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"prestadores"
+									]
+								},
+								"description": "Busca todos os Prestadores"
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar Prestadores Por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/prestadores/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"prestadores",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Retorna os detalhes de um prestador específico com base no ID fornecido.\n\n\\## Parâmetros  \n\\- \\`id\\` (integer, obrigatório): ID do prestador."
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar Status dos Prestadores",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"prestadores\": [1, 2, 3]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/prestadores/status",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"prestadores",
+										"status"
+									]
+								},
+								"description": "Rota para listar todos as Coordenadas de um endereço"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Rotas Geocode",
+					"item": [
+						{
+							"name": "Busca Coordenadas",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/geocode/Rua 8",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"geocode",
+										"Rua 8"
+									]
+								},
+								"description": "Acessa o serviço externo e retorna latitude e longetude do endereço passado como parâmetro"
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS92MS9sb2dpbiIsImlhdCI6MTcxOTM1MTIzNCwiZXhwIjoxNzE5MzcyODM0LCJuYmYiOjE3MTkzNTEyMzQsImp0aSI6InpCTlZNNUh4MUMzazBNMGQiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.RJ007NiqSW1eJsXest8uA3zvJwHJgGLgtVilvp10ue0",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
