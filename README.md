@@ -58,4 +58,13 @@ A imagem abaixo ilustra a execução dos comando:
 ![alt text](documentationImages/laragon4.png)
 
 
+### Documentação no Postman
 
+A documentação da API está publicada no documenter do [postman](https://documenter.getpostman.com/view/36492158/2sA3drHZtR).
+
+O JSON da collection está na pasta [postmanDoc](postmanDoc/Api%20INet%20Doc.postman_collection.json).
+
+Antes de testar os endpoints é necessário fazer login e colar o token no campo Autorization da pasta as rotas privadas.
+O token é do tipo "Bearer Token" e tem validade de 6 horas.
+
+![alt text](documentationImages/postman1.png)
