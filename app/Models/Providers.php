@@ -9,4 +9,5 @@ class Providers extends Model
 {
     use HasFactory;
     protected $table = 'prestador';
+
 }

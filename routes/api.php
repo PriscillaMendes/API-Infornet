@@ -34,8 +34,8 @@ Route::prefix("v1")->group(function () {
 
     Route::get('/prestadores', [ProvidersController::class, 'index'])->middleware(ProtectedRouteAuth::class);
     Route::get('/prestadores/{prestador}', [ProvidersController::class, 'show'])->middleware(ProtectedRouteAuth::class);
-    Route::get('/prestadores/{prestador_endereco}', [ProvidersController::class, 'show'])->middleware(ProtectedRouteAuth::class);
-    Route::get('/prestadores/status/{res}', [ProvidersController::class, 'getProvidersStatus'])->middleware(ProtectedRouteAuth::class);
+    Route::post('/prestadores/status', [ProvidersController::class, 'getProvidersStatus'])->middleware(ProtectedRouteAuth::class);
+    Route::post('/prestadores/buscar', [ProvidersController::class, 'findProviders'])->middleware(ProtectedRouteAuth::class);
 
     Route::get('/geocode/{endereco}', [GeocodeController::class, 'getCoordinates'])->middleware(ProtectedRouteAuth::class);
 
