@@ -17,8 +17,6 @@ class GeocodeController extends Controller
 
     public function getCoordinates(string $address)
     {
-
-
         if (!$address) {
             return response()->json(['error' => 'Address is required'], 400);
         }

@@ -193,7 +193,6 @@ class ProvidersController extends Controller
         }
     }
 
-
     public function show(string $id)
     {
         return Providers::where('id', $id)->first();

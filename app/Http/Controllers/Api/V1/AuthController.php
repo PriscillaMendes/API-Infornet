@@ -33,8 +33,6 @@ class AuthController extends Controller
         }catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
-
-        
        
     }
     public function logout(){
