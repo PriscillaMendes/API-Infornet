@@ -78,6 +78,10 @@ class ProvidersController extends Controller
                 $orderList = $validated['ordenacao'];
             }
 
+            if($validated['quantidade'] == null || empty($validated['quantidade'])){
+                $queryLimit = 100;
+            }
+
             $latFrom = $validated['origem']['latitude'];
             $lonFrom = $validated['origem']['longitude'];
             $latTo = $validated['destino']['latitude'];
@@ -86,18 +90,14 @@ class ProvidersController extends Controller
             $hgcDistance = new HgcDistance();
             $serviceDistance = $hgcDistance->hGCDistance($latFrom, $lonFrom, $latTo, $lonTo);
 
-            $distanceQuery = "( 6371 * acos( cos( radians(?) ) *
+            $distanceQuery = "( 6371 * acos( cos( radians( ".  $latFrom . " ) ) *
             cos( radians( latitude ) )
-            * cos( radians( longitude ) - radians(?) )
-            + sin( radians(?) ) *
-            sin( radians( latitude ) ) ) ) + (?)";
+            * cos( radians( longitude ) - radians( ". $lonFrom . ") )
+            + sin( radians( " .  $latFrom .") ) *
+            sin( radians( latitude ) ) ) ) + ( " .  $serviceDistance . " )";
 
-            $query = "prestador.id, servico_prestador.servico_id, nome, logradouro, bairro, numero, cidade, UF, 
-                ( 6371 * acos( cos( radians(?) ) *
-                cos( radians( latitude ) )
-                * cos( radians( longitude ) - radians(?) )
-                + sin( radians(?) ) *
-                sin( radians( latitude ) ) ) ) + (?) AS distance, 
+            $query = "prestador.id, servico_prestador.servico_id, nome, logradouro, bairro, numero, cidade, UF, "
+                . $distanceQuery. " AS distance, 
                 CASE
                     WHEN ". $distanceQuery." > km_saida THEN ROUND(valor_saida+((". $distanceQuery . " - km_saida )*valor_km_excedente), 2)
                     ELSE ROUND(valor_saida, 2)
@@ -107,6 +107,7 @@ class ProvidersController extends Controller
                 ->join('servico_prestador', 'prestador.id', '=', 'servico_prestador.prestador_id');
             
             $providers =$providers->where("servico_prestador.servico_id",  "servico_id");
+
             $whereQuery = [$validated['servico_id']];
             $statusFilter = False;
             if(!empty($validated['filtros'])){
@@ -135,9 +136,9 @@ class ProvidersController extends Controller
                 }
             }
 
-            $val = array_merge([$latFrom, $lonFrom, $latFrom, $serviceDistance], [$latFrom, $lonFrom, $latFrom, $serviceDistance], [$latFrom, $lonFrom, $latFrom, $serviceDistance], $whereQuery);
-
-            $providers =$providers->setBindings($val)
+            $providers =$providers
+                            ->limit($queryLimit)
+                            ->setBindings($whereQuery)
                             ->get();
 
             $arrProvider = [];
