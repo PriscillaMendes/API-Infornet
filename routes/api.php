@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\V1\ProvidersController;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+
 Route::prefix("v1")->group(function () {
     
     Route::get("/", [UserController::class, 'index'])->name('users.index');
