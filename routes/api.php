@@ -41,7 +41,7 @@ Route::prefix("v1")->group(function () {
 
 
 
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::post('/users/{user}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index')->middleware(ProtectedRouteAuth::class);
+    Route::post('/users/{user}', [UserController::class, 'show'])->name('users.show')->middleware(ProtectedRouteAuth::class);
 
 });
